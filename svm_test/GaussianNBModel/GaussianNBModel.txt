@@ -1,0 +1,132 @@
+#Import Libraries
+import pandas as pd
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.model_selection import train_test_split
+from sklearn.naive_bayes import GaussianNB, MultinomialNB, BernoulliNB
+from sklearn.metrics import confusion_matrix
+from sklearn.impute import SimpleImputer
+import seaborn as sns
+import matplotlib.pyplot as plt
+import numpy as np
+#----------------------------------------------------
+
+# data
+
+dataset=pd.read_excel(
+    r'C:\Users\tarek\Desktop\jaPAN\sham.xlsx', encoding='utf-8-sig')
+
+X = dataset.iloc[:, 0]
+y = dataset.iloc[:, 1]
+
+print('x >>>>>\n : ' , X)
+print('y >>>>>: \n' , y)
+
+#----------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#Splitting data
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=44, shuffle =True)
+
+print('X_train shape is ' , X_train.shape)
+print('X_test shape is ' , X_test.shape)
+print('y_train shape is ' , y_train.shape)
+print('y_test shape is ' , y_test.shape)
+
+
+
+
+
+# ------------------------tfidf--------------------
+count_vect= TfidfVectorizer()
+X_train_counts = count_vect.fit_transform(X_train)
+trainArray=X_train_counts.toarray()
+
+X_test_counts=count_vect.fit_transform(X_test)
+testArray=X_test_counts.toarray()
+
+dataframeTrain=pd.DataFrame(trainArray)
+dataframeTest=pd.DataFrame(testArray)
+
+print(dataframeTrain)
+print(dataframeTest)
+
+
+
+
+
+# Cleaning data
+
+
+ImputedModule = SimpleImputer(missing_values = np.nan, strategy ='mean')
+ImputedX = ImputedModule.fit(dataframeTrain)
+datacleanTrain = ImputedX.transform(dataframeTrain)
+
+#dataframeTrain Data
+print('dataframeTrain is \n' , datacleanTrain[:10])
+
+#y Data
+print('y Data is \n' , y[:10])
+
+
+
+#ImputedModule = SimpleImputer(missing_values = np.nan, strategy ='mean')
+ImputedX = ImputedModule.fit(dataframeTest)
+datacleanTest = ImputedX.transform(dataframeTest)
+
+#dataframeTest Data
+print('dataframeTest Data \n' , datacleanTest[:10])
+
+#y Data
+print('y Data is \n' , y[:10])
+
+
+
+
+
+
+
+
+#----------------------------------------------------
+#Applying GaussianNB Model 
+
+GaussianNBModel = GaussianNB()
+GaussianNBModel.fit(datacleanTrain, y_train)
+#Calculating Details
+print('GaussianNBModel Train Score is : ' , GaussianNBModel.score(datacleanTrain, y_train))
+GaussianNBModel.fit(dataframeTest, y_test)
+
+print('GaussianNBModel Test Score is : ' , GaussianNBModel.score(datacleanTest, y_test))
+print('----------------------------------------------------')
+#Calculating Prediction
+#y_pred = GaussianNBModel.predict(datacleanTest)
+#y_pred_prob = GaussianNBModel.predict_proba(dataframeTest)
+#print('Predicted Value for GaussianNBModel is : ' , y_pred[:10])
+#print('Prediction Probabilities Value for GaussianNBModel is : ' , y_pred_prob[:10])
+
+#----------------------------------------------------
+#Calculating Confusion Matrix
+CM = confusion_matrix(y_test, y_pred)
+print('Confusion Matrix is : \n', CM)
+
+# drawing confusion matrix
+sns.heatmap(CM, center = True)
+plt.show()

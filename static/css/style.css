@@ -1,0 +1,327 @@
+body {
+  background: url("../images/o.jpg");
+  background-size: cover;
+  overflow-x: hidden;
+  overflow-x: visible;
+  height: 900px;
+}
+
+.adduser {
+  float: right;
+  height: 47px !important;
+  margin-bottom: 10px !important;
+  font-size: 20px !important;
+}
+
+.my_button {
+  height: 39px;
+  width: 120px;
+  margin-top: 10px;
+}
+/*complaints*/
+table {
+  background-color: rgb(241 237 236);
+}
+.myfont {
+  font-size: 17px !important;
+  width: 90px !important;
+  height: 47px !important;
+  padding: 11px !important;
+}
+.mytable {
+  background-color: rgb(198 225 230 / 62%);
+  margin: 4px;
+  font-size: 18px;
+  font-family: "Bree Serif", serif;
+
+  color: #000000 !important;
+}
+
+.logo {
+  margin: auto;
+}
+.logo img {
+  height: 120px;
+  width: 170px;
+  position: relative;
+  top: 11px;
+}
+/* login*/
+.form-signin {
+  background: url("../images/yu.jpg");
+  width: 370px;
+  padding: 27px;
+  background-size: cover;
+  background-position: 82% 50%;
+  overflow-x: hidden;
+  height: 310px;
+  margin: auto;
+  position: relative;
+  top: 7px;
+  right: 8px;
+  overflow-y: hidden;
+  padding-top: 85px;
+}
+/* room  name */
+
+.form-signin_friends {
+  background: url("../images/flag.jpg");
+  width: 370px;
+  padding: 27px;
+  background-size: cover;
+  background-position: 82% 50%;
+  overflow-x: hidden;
+  height: 180px;
+  margin: auto;
+  position: relative;
+  top: 7px;
+  right: 8px;
+}
+.form-signin_friends input {
+  width: 270px;
+  direction: rtl;
+  height: 40px;
+}
+.navbar-inverse .navbar-nav > li > a {
+  font-size: 19px;
+  color: white;
+}
+.form-signin .form-control {
+  position: relative;
+  top: 18px;
+  box-sizing: border-box;
+  font-size: 16px;
+  text-align: right;
+  margin: auto;
+}
+/*room*/
+.area {
+  height: 275px !important;
+  max-height: 275px;
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap");
+.mychatwindow {
+  position: absolute;
+  top: 50;
+  bottom: 50;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 100%;
+  padding: 30px;
+}
+h2 {
+  text-align: center;
+  font-family: "Roboto", sans-serif;
+}
+.welcome {
+  font-style: oblique;
+  font-family: sans-serif;
+  font-size: 22px;
+}
+.mytextarea {
+  width: 500px;
+  height: 150px;
+  resize: none;
+}
+.mysend {
+  width: 511x;
+  height: 34px;
+  position: relative;
+  left: 17px;
+}
+
+/*chat page*/
+.my_button {
+  height: 39px;
+  width: 120px;
+}
+/* textarea*/
+.mychat {
+  margin: auto;
+  width: 80%;
+}
+/*input*/
+.name {
+  width: 69%;
+  height: 42px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  margin: 10px;
+}
+/* form*/
+.Reg {
+  margin: auto;
+  width: 600px;
+
+  height: 490px;
+  margin-top: 150px;
+  background-color: darkgray;
+  padding: 10px;
+  text-align: center;
+  direction: rtl;
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  background: rgba(2, 20, 30, 0.7);
+  box-sizing: border-box;
+  border-radius: 12px;
+  font-size: 20px;
+  padding: 25px;
+  -webkit-shadow: 0.5px 0.5px 0px 2px;
+}
+/* Room */
+.myheader {
+  font-size: 22px;
+  color: white;
+  font-family: "Cairo", sans-serif;
+}
+
+.btn-group-lg > .btn,
+.btn-lg {
+  margin-top: 10px;
+  height: 45px;
+}
+.myalert {
+  height: 110px;
+}
+/* button delete and update*/
+.myfonts {
+  height: 47px !important;
+  font-size: 17px !important;
+  width: 90px !important;
+  padding: 11px !important;
+}
+
+.mytitle {
+  text-align: center;
+
+  font-family: "Bree Serif", serif;
+
+  color: #ee1180 !important;
+  background-color: white;
+  margin: auto;
+  font-size: 34px;
+  height: 47px;
+}
+.pull-right {
+  float: right;
+  font-size: 22px;
+}
+
+.close {
+  float: right;
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 1;
+  color: #000;
+  text-shadow: 0 1px 0 #fff;
+  float: left !important;
+}
+.myclose {
+  float: left !important;
+}
+.table > thead > tr > th {
+  padding: 8px;
+  line-height: 1.42857143;
+  vertical-align: top;
+  border-top: 1px solid #ddd;
+  width: 90%;
+}
+
+.fr1 input {
+  margin-top: 22px;
+}
+/*page content*/
+
+.mytexta {
+  width: 100% !important;
+  direction: rtl !important;
+  width: 450 !important;
+  max-width: 480px !important;
+  height: 150px !important;
+  max-height: 150px !important;
+}
+/*page content*/
+.Regi {
+  margin: auto;
+  width: 600px;
+  height: 365px;
+  margin-top: 335px;
+  background-color: darkgray;
+  padding: 10px;
+  text-align: center;
+  direction: rtl;
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  background: rgba(2, 20, 30, 0.7);
+  box-sizing: border-box;
+  border-radius: 12px;
+
+  padding: 40px;
+  -webkit-shadow: 0.5px 0.5px 0px 2px;
+}
+
+td {
+  text-align: center;
+}
+
+.la {
+  margin-top: 10px;
+  font-size: 16px !important;
+  color: floralwhite;
+}
+.alert-danger {
+  background-color: rgb(231, 119, 119);
+  text-align: center;
+  margin: auto;
+  font-size: 24px;
+  color: white;
+  width: 800px;
+  margin-top: 10px;
+}
+.alert-success {
+  background-color: rgb(52, 233, 16);
+
+  text-align: center;
+  margin: auto;
+  font-size: 24px;
+  color: white;
+  width: 800px;
+  margin-top: 10px;
+}
+.mybutton {
+  box-sizing: border-box;
+  border-radius: 12px;
+  width: 100px;
+  margin: auto;
+  margin-top: 10px;
+}
+/*link*/
+.create_regis {
+  font-size: 18px;
+  color: #e7e7e4;
+  margin-top: 5px;
+}
+.mytable {
+  background-color: rgb(198 225 230 / 62%);
+  margin: 4px;
+  font-size: 18px;
+  font-family: "Bree Serif", serif;
+
+  color: #000000 !important;
+}
+
+.myemail {
+  width: 1000px;
+  margin: auto;
+  font-size: 22px;
+  background-color: rgb(86, 169, 218);
+  margin-top: 590px;
+}

@@ -1,0 +1,71 @@
+
+{% include 'header.html' %}
+
+
+<body>
+
+{% block body %}
+
+
+
+<nav class="navbar navbar-inverse">
+    
+  <div class="container-fluid">
+    <ul class="nav navbar-nav">
+
+       <li><a href="">   <span class="glyphicon glyphicon-user"></span> تسجيل الخروج  </a></li>
+
+
+
+
+          
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right">
+          <li><a  href="content">        تقديم شكوى  </a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li  ><a  href="law">        للاطلاع على عقوبات القانون السوري الخاصة بالجريمة المعلوماتية  </a></li>
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right">
+          <li  ><a  href="private" >      تواصل    </a></li>
+         
+        </ul>
+        
+       
+      </div>
+    </nav>
+
+
+    
+
+    <body class="text-center">
+
+      <br>
+      <div class="logo">
+        <img src="../static\images\sham_photo.jpg" alt="">
+      
+      <br>
+    
+      <br>
+
+    
+      <form class="form-signin_friends" action="{{url_for('chat')}}" method="POST">
+
+
+        <input type="text" id="room" name="room" class="form-control_room" placeholder="اسم الجلسة "  required><br>
+        <button class="btn btn-lg enter btn-primary btn-block mybutton" value="submit">الدخول  </button>
+        
+        
+    
+      </form>
+    </div>
+
+
+
+
+
+
+
+      {% endblock body %}

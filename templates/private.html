@@ -1,0 +1,101 @@
+{% include 'header.html' %} 
+
+
+<body>
+  {% block body %}
+
+  <h2 class="mytitle">البريد الالكتروني</h2>
+
+   {{data}}
+   {% with messages =
+  get_flashed_messages(with_categories=true) %} {% if messages %} {% for
+  category, message in messages %} {% if category=='success' %}
+
+  <div class="alert alert-success alert-dismissable" role="alert">
+    {{message}}
+   
+    <button type="button" class="close" data-dismiss="alert" aria-label="close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+   
+  
+   
+    
+        
+
+  </form>
+    <button type="button" class="close" data-dismiss="alert" aria-label="close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  {% endif %} {% endfor %} {% endif %} {% endwith %}
+  <br />
+
+  <form class="Regi" action="{{url_for('send')}}" method="POST">
+    <div class="col">
+      <input
+        type="text"
+        name="receiver"
+        class="name"
+        placeholder="  أدخل أسم المستخدم   "
+        required="required"
+      />
+    </div>
+
+    <div class="col">
+      <textarea
+        name="mymail"
+        placeholder=" ✍ "
+        cols="46"
+        rows="6"
+        class="mytexta"
+        required="required"
+      ></textarea>
+    </div>
+   
+    <br />
+    
+    <button
+      type="submit"
+      class="btn btn-primary sign_in"
+      onclick="return confirm('هل متأكد أنك تريد أرسال الرسالة')"
+    >
+    إرسال    </button>
+  </form>
+
+  <table class="table table-hover myemail">
+    <tr>
+      <td></td>
+      <td>الرسالة</td>
+      <td>المرسل</td>
+    </tr>
+
+    {% for row in mysend %}
+
+    <tr>
+      <td>
+        <a
+          href="/delete_email/{{ row.0 }}"
+          class="btn btn-danger btn-xs myfonts"
+          onclick="return confirm('هل أنت متأكد من الحذف؟')"
+          >الحذف</a
+        >
+      </td>
+
+      <td>{{row.2}}</td>
+
+      <td>{{row.1}}</td>
+
+      <td></td>
+    </tr>
+
+    {% endfor %}
+  </table>
+
+  <br />
+
+  {% endblock body %}
+</body>

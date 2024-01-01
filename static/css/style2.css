@@ -1,0 +1,26 @@
+body {
+  background-size: cover;
+  height: 640px;
+  height: auto;
+
+  margin: auto;
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 20%;
+}
+.Article {
+  font-size: 20px !important;
+  text-align: right !important;
+  padding: 30px;
+  font-family: "Amiri", serif;
+  font-family: "Fredoka One", cursive;
+  font-family: "Lemonada", cursive;
+  color: rgb(253, 252, 251);
+}
+.container {
+  background-color: rgb(33 70 90);
+}

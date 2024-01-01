@@ -1,0 +1,42 @@
+
+{% include 'header.html' %}
+
+
+
+
+{% block body %}
+<body class="text-center">
+
+    <div class="logo">
+        <img src="static\images\sham_photo.jpg" alt="">
+      
+     
+    
+    
+
+    <div class="mychatwindow">
+        <br>
+
+        <br>
+        <h2 class=myheader> welcome : {{session['username']}}</h2>
+
+
+        <h2 class=myheader>Room:{{session['room']}}</h2>
+        
+        <br>
+        <div class="form-group  mychat">
+            <textarea id="chat" class="form-control area mychat"  rows="12"    maxlength="30"></textarea>
+            <input type="text" class="form-control mychat " id="text" size="60" placeholder="Enter your message here" />
+
+</div>
+
+
+<div>           <button type="button" class="btn btn-danger my_button" onclick=leave_room()> إنهاء المحادثة </button>
+              <button type="button" id="send" class="btn btn-primary   my_button"> إرسال</button>
+            
+
+
+    </div>
+   
+ 
+    {% endblock body %}

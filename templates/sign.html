@@ -1,0 +1,103 @@
+
+{% include 'header.html' %}
+
+
+
+<body>
+{% block body %}
+
+
+
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+
+{% if messages %}
+
+{% for category, message in messages %}
+{% if  category=='success' %}
+
+
+
+      <div class="alert alert-success   alert-dismissable " role="alert">
+
+  
+         {{message}}
+    
+      <button type="button" class="close" data-dismiss="alert" aria-label="close">
+  
+        <span aria-hidden="true">&times;</span>
+  
+      </button>
+  
+      </div>
+     {%else%}
+
+
+
+     <div class="alert alert-danger  alert-dismissable " role="alert">
+
+     
+      {{message}}
+    
+      <button type="button" class="close" data-dismiss="alert" aria-label="close">
+  
+        <span aria-hidden="true">&times;</span>
+  
+     </button>
+  
+    </div>
+    {% endif %}
+
+   {% endfor %}
+   {% endif %}
+   {% endwith %}
+
+</body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <form class="Reg" action="{{url_for('insert_user')}}" method="POST">
+         
+          <div class="col">
+            <input type="text"  name="name" class="name" placeholder=" الاسم">
+          </div>
+
+          <div class="col">
+            <input type="text"  name="lastname" class="name" placeholder=" الكنية">
+          </div>
+
+
+          <div class="col">
+            <input type="text"  name="username"class="name" placeholder=" اسم المستخدم">
+          </div>
+          <div class="col">
+            <input type="password"  name="password"class="name" placeholder=" كلمة السر">
+          </div>
+          <div class="col">
+            <input type="email"  name="email"class="name" placeholder="الايميل">
+
+          </div>
+          <div class="col">
+            <input type="text"  name="phone"class="name" placeholder=" الموبايل">
+          </div>
+
+          
+          <button type="submit" class="btn btn-primary sign_in">إرسال  </button>
+          <br>
+          <a href="http://127.0.0.1:2700/law" class="create_regis"> لاطلاع على عقوبات الفانون السوري </a> 
+
+      </form>
+
+      {% endblock body %}

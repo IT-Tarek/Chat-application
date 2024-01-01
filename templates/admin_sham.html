@@ -1,0 +1,521 @@
+
+{% include "header.html" %}
+
+
+<link href="{{url_for('static', filename = 'css/bootstrap.min.css')}}" rel="stylesheet">
+
+{% block body %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+{% endblock %}
+
+
+<script type="text/javascript" src="{{url_for('static', filename='js/jquery-3.2.1.min.js') }}"></script>
+
+<script type="text/javascript" src="{{url_for('static', filename = 'js/bootstrap.min.js')}}"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar navbar-inverse">
+   <div class="container-fluid">
+     
+    
+     <ul class="nav navbar-nav navbar-left">
+      <li><a href="{{logout}}"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+   </ul>
+   </div>
+ </nav>
+<div class="container">
+
+   <div class="row">
+
+      <div class="col md-12">
+        
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+
+{% if messages %}
+
+{% for category, message in messages %}
+{% if  category=='success' %}
+
+
+
+      <div class="alert alert-success   alert-dismissable " role="alert">
+
+  
+         {{message}}
+    
+      <button type="button" class="close" data-dismiss="alert" aria-label="close">
+  
+        <span aria-hidden="true">&times;</span>
+  
+      </button>
+  
+      </div>
+     {%else%}
+
+
+
+     <div class="alert alert-danger  alert-dismissable " role="alert">
+
+  
+       {{message}}
+    
+      <button type="button" class="close" data-dismiss="alert" aria-label="close">
+  
+        <span aria-hidden="true">&times;</span>
+  
+     </button>
+  
+    </div>
+    {% endif %}
+
+   {% endfor %}
+   {% endif %}
+   {% endwith %}
+
+
+
+
+
+
+
+
+
+
+        
+     
+      
+   
+    
+            
+
+
+
+
+         <h2 class="mytitle">User management
+            <button type="button" class="btn btn-success pull-right  adduser" data-toggle="modal" data-target="#myModal">
+               إضافة مستخدم</button>
+         </h2>
+
+
+       
+
+        
+ 
+
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+{{session['username']}}
+      
+{{session['groupid']}}
+
+           {{session['id']}}
+   
+
+
+           <table class="table table-hover mytable" >
+
+
+            <tr>
+               <th></th>
+               <th>الموبايل</th>
+               <th>الايميل </th>
+
+               <th>اسم المستخدم</th>
+               <th>الكنية</th>
+
+               <th>الاسم</th>
+               <th>رقم</th>
+
+            </tr>
+
+
+
+
+
+                {% for row in students %}
+           
+            <tr>
+               <td>
+
+                  <a href="/delete1/{{row.0}}" class="btn btn-danger btn-xs myfonts"
+                  onclick="return confirm('Are You Sure For Delete?')">الحذف</a>
+                  <a href="/update/{{row.0}}" class="btn btn-primary btn-xs myfont" data-toggle="modal"
+                     data-target="#modaledit{{row.0}}">التعديل</a>
+                  
+
+               </td>
+               <td>{{row.6}}</td>
+               <td>{{row.5}}</td>
+               <td>{{row.3}}</td>
+               <td>{{row.2}}</td>
+               <td>{{row.1}}</td>
+               <td>{{row.0}}</td>
+
+               <td></td>
+
+            </tr>
+
+            <div id="modaledit{{row.0}}" class="modal fade" role="dialog">
+
+
+               <div class="modal-dialog">
+
+
+                  <div class="modal-content">
+
+
+                     <div class="modal-header">
+
+
+                        <button type="button" class="myclose" data-dismiss="modal">&times;</button>
+
+
+                        <h4 class="modal-title">تحديث المعلومات </h4>
+
+
+                     </div>
+
+
+                     <div class="modal-body">
+
+
+                        <form action="{{ url_for('update') }}" method="POST">
+
+
+                           <div class="form-group">
+
+
+                              <label> :الاسم</label>
+                              <input type="hidden" name="id" value="{{row.0}}">
+
+                              <input type="text" class="form-control" name="name" value="{{row.1}}">
+
+
+                           </div>
+
+
+
+                           <div class="form-group">
+
+
+                              <label> :الكنية </label>
+
+                              <input type="text" class="form-control" name="lastname" value="{{row.2}}">
+
+
+                           </div>
+                           <div class="form-group">
+
+
+                              <label>  : اسم المستخدم   </label>
+
+                              <input type="text" class="form-control" name="username" value="{{row.3}}">
+
+
+                           </div>
+                           <div class="form-group">
+
+                              <label>: كلمة السر</label>
+
+                              <input type="password" class="form-control" name="password" value="{{row.4}}">
+
+
+                           </div>
+                           <div class="form-group">
+
+                              <label>: ايميل </label>
+
+                              <input type="text" class="form-control" name="email" value="{{row.5}}">
+
+
+                           </div>
+                           <div class="form-group">
+
+
+                              <label>: الموبايل </label>
+
+                              <input type="text" class="form-control" name="phone" value="{{row.6}}">
+
+
+                           </div>
+                          
+
+
+                           <div class="form-group">
+
+
+                              <button class="btn btn-primary" type="sbumit">تحديث المعلومات </button>
+
+
+                           </div>
+
+
+                        </form>
+
+
+                     </div>
+
+
+                     <div class="modal-footer">
+
+
+                        <button type="button" class="btn btn-default" data-dismiss="modal">اغلاق</button>
+
+
+                     </div>
+
+
+                  </div>
+
+
+               </div>
+
+
+            </div>
+
+
+            {% endfor %}
+
+
+
+
+         </table>
+
+
+      </div>
+
+
+      <!-- Modal -->
+
+
+      <div id="myModal" class="modal fade" role="dialog">
+
+
+         <div class="modal-dialog">
+
+
+            <div class="modal-content">
+
+
+               <div class="modal-header">
+
+
+                  <button type="button" class="myclose" data-dismiss="modal">&times;</button>
+
+
+                  <h4 class="modal-title">Please Insert Data</h4>
+
+
+               </div>
+
+
+               <div class="modal-body">
+
+
+                  <form action="{{ url_for('insert') }}" method="POST">
+
+
+                     <div class="form-group">
+
+
+                        <label>Name:</label>
+                        <input type="text" class="form-control" name="name" required="1">
+
+
+                     </div>
+                     <div class="form-group">
+
+
+                        <label>lastname:</label>
+                        <input type="text" class="form-control" name="lastname" required="1">
+
+
+                     </div>
+
+                     <div class="form-group">
+
+
+                        <label>username:</label>
+                        <input type="text" class="form-control" name="username" required="1">
+
+
+                     </div>
+
+
+                     <div class="form-group">
+
+
+                        <label>password:</label>
+                        <input type="password" class="form-control" name="password" required="1">
+
+
+                     </div>
+
+
+                     <div class="form-group">
+
+
+                        <label>Email:</label>
+                        <input type="text" class="form-control" name="email" required="1">
+
+
+                     </div>
+                     <div class="form-group">
+
+
+                        <label>phone:</label>
+                        <input type="text" class="form-control" name="phone" required="1">
+
+
+                     </div>
+                     <div class="form-group">
+
+
+                        <button class="btn btn-primary" type="submit">Insert Data</button>
+
+
+                     </div>
+
+
+                  </form>
+
+
+               </div>
+
+
+               <div class="modal-footer">
+
+
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+
+               </div>
+
+
+            </div>
+
+
+         </div>
+
+
+      </div>
+
+
+
+        
+
+      <h2 class="mytitle"> 
+         complaints
+
+      </h2>
+
+
+
+      <table class="table table-hover mytable">
+
+
+         <tr>
+          
+
+            <td> </td>
+            <td>  الشكوى</td>
+            
+            <td>      الايميل</td>
+            
+            
+            </tr>
+            
+            
+            
+            
+            
+            {% for row in messages_1 %}
+            
+            
+            <tr>
+            <td>
+            
+               <a href="/delete/{{row.0}}" class="btn btn-danger btn-xs myfonts"
+               onclick="return confirm('Are You Sure For Delete?')">الحذف</a>
+               
+              
+            
+            </td>
+            <td>{{row.1}}</td>
+            
+            <td>{{row.2}}</td>
+            <td></td>
+            
+            </tr>
+            
+            
+            
+            
+               
+            
+            
+            {% endfor %}
+            
+            
+            
+            
+            </table>
+

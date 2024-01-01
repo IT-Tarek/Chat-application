@@ -1,0 +1,28 @@
+
+{% include 'header.html' %}
+
+
+<body>
+{% block body %}
+
+
+
+    <form class="Regi" action="{{url_for('insert_message')}}" method="POST">
+    
+         
+      <div class="col">
+        <input type="text"  name="Complaint" class="name" placeholder="  أدخل أسم المستخدم   " required="required" >
+      </div>
+
+          <div class="col">
+            <textarea   name="textarea" placeholder=" ✍ " cols="46" rows="6" class="mytexta" required="required"   ></textarea>
+          </div>
+         
+          
+<br>
+          
+          <button type="submit" class="btn btn-primary sign_in">إرسال</button>
+          
+      </form>
+
+      {% endblock body %}
