@@ -4,7 +4,6 @@
 
 <body>
 
-{% block body %}
 
 
 
@@ -13,8 +12,8 @@
   <div class="container-fluid">
     <ul class="nav navbar-nav">
 
-       <li><a href="">   <span class="glyphicon glyphicon-user"></span> تسجيل الخروج  </a></li>
 
+       <li><a href="{{url_for('logout') }}"><span class="glyphicon glyphicon-user"></span>  تسجيل الخروج </a></li>
 
 
 
@@ -22,14 +21,15 @@
         </ul>
 
         <ul class="nav navbar-nav navbar-right">
-          <li><a  href="content">        تقديم شكوى  </a></li>
+          <li  ><a  href="private" >      تواصل مع الأصدقاء     </a></li>
+
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <li  ><a  href="law">        للاطلاع على عقوبات القانون السوري الخاصة بالجريمة المعلوماتية  </a></li>
         </ul>
 
         <ul class="nav navbar-nav navbar-right">
-          <li  ><a  href="private" >      تواصل    </a></li>
+          <li><a  href="content">        تواصل معنا </a></li>
          
         </ul>
         
@@ -37,7 +37,10 @@
       </div>
     </nav>
 
+    {% block body %}
 
+
+   
     
 
     <body class="text-center">

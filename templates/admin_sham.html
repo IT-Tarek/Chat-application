@@ -5,70 +5,21 @@
 <link href="{{url_for('static', filename = 'css/bootstrap.min.css')}}" rel="stylesheet">
 
 {% block body %}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-
-
-</div>
-
-
-
-
-
-
-{% endblock %}
-
-
-<script type="text/javascript" src="{{url_for('static', filename='js/jquery-3.2.1.min.js') }}"></script>
-
-<script type="text/javascript" src="{{url_for('static', filename = 'js/bootstrap.min.js')}}"></script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <nav class="navbar navbar-inverse">
    <div class="container-fluid">
      
-    
-     <ul class="nav navbar-nav navbar-left">
-      <li><a href="{{logout}}"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+     <ul class="nav navbar-nav navbar-right">
+
+      <li><a href="{{url_for('logout') }}"> تسجيل الخروج </a></li>
+      <li><a href="{{url_for('private') }}"></span>  تواصل  </a></li>
+
+      <li><a href="{{url_for('home') }}"> </span>  الرئيسية </a></li>
+   
+      
    </ul>
+   
+   
+   
    </div>
  </nav>
 <div class="container">
@@ -131,11 +82,6 @@
 
 
         
-     
-      
-   
-    
-            
 
 
 
@@ -168,9 +114,11 @@
 
            {{session['id']}}
    
+      
+   
 
 
-           <table class="table table-hover mytable" >
+         <table class="table table-hover mytable" >
 
 
             <tr>
@@ -187,16 +135,15 @@
             </tr>
 
 
-
-
+            
 
                 {% for row in students %}
            
             <tr>
                <td>
 
-                  <a href="/delete1/{{row.0}}" class="btn btn-danger btn-xs myfonts"
-                  onclick="return confirm('Are You Sure For Delete?')">الحذف</a>
+                  <a href="/delete1/{{ row.0 }}" class="btn btn-danger btn-xs myfonts"
+                  onclick="return confirm('هل أنت متأكد من الحذف ؟ ')">الحذف</a>
                   <a href="/update/{{row.0}}" class="btn btn-primary btn-xs myfont" data-toggle="modal"
                      data-target="#modaledit{{row.0}}">التعديل</a>
                   
@@ -228,7 +175,7 @@
                         <button type="button" class="myclose" data-dismiss="modal">&times;</button>
 
 
-                        <h4 class="modal-title">تحديث المعلومات </h4>
+                        <h4 class="modal-title">تحديث المعلومات  </h4>
 
 
                      </div>
@@ -243,7 +190,7 @@
                            <div class="form-group">
 
 
-                              <label> :الاسم</label>
+                              <label>: الاسم</label>
                               <input type="hidden" name="id" value="{{row.0}}">
 
                               <input type="text" class="form-control" name="name" value="{{row.1}}">
@@ -256,7 +203,7 @@
                            <div class="form-group">
 
 
-                              <label> :الكنية </label>
+                              <label>: الكنية</label>
 
                               <input type="text" class="form-control" name="lastname" value="{{row.2}}">
 
@@ -265,7 +212,7 @@
                            <div class="form-group">
 
 
-                              <label>  : اسم المستخدم   </label>
+                              <label>: اسم المستخدم</label>
 
                               <input type="text" class="form-control" name="username" value="{{row.3}}">
 
@@ -281,7 +228,7 @@
                            </div>
                            <div class="form-group">
 
-                              <label>: ايميل </label>
+                              <label>: الايميل</label>
 
                               <input type="text" class="form-control" name="email" value="{{row.5}}">
 
@@ -290,7 +237,7 @@
                            <div class="form-group">
 
 
-                              <label>: الموبايل </label>
+                              <label>: الموبايل</label>
 
                               <input type="text" class="form-control" name="phone" value="{{row.6}}">
 
@@ -299,10 +246,10 @@
                           
 
 
-                           <div class="form-group">
+                           <div class="form-group updateButoon">
 
 
-                              <button class="btn btn-primary" type="sbumit">تحديث المعلومات </button>
+                              <button class="btn btn-primary " type="sbumit">تحديث </button>
 
 
                            </div>
@@ -317,7 +264,7 @@
                      <div class="modal-footer">
 
 
-                        <button type="button" class="btn btn-default" data-dismiss="modal">اغلاق</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">إغلاق</button>
 
 
                      </div>
@@ -335,6 +282,7 @@
             {% endfor %}
 
 
+            </tbody>
 
 
          </table>
@@ -361,8 +309,7 @@
                   <button type="button" class="myclose" data-dismiss="modal">&times;</button>
 
 
-                  <h4 class="modal-title">Please Insert Data</h4>
-
+                  <h4 class="modal-title"> إضافة حساب مستخدم     </h4>
 
                </div>
 
@@ -376,7 +323,7 @@
                      <div class="form-group">
 
 
-                        <label>Name:</label>
+                        <label>: الاسم</label>
                         <input type="text" class="form-control" name="name" required="1">
 
 
@@ -384,7 +331,7 @@
                      <div class="form-group">
 
 
-                        <label>lastname:</label>
+                        <label>: الكنية</label>
                         <input type="text" class="form-control" name="lastname" required="1">
 
 
@@ -393,7 +340,7 @@
                      <div class="form-group">
 
 
-                        <label>username:</label>
+                        <label>: اسم المستخدم</label>
                         <input type="text" class="form-control" name="username" required="1">
 
 
@@ -403,7 +350,7 @@
                      <div class="form-group">
 
 
-                        <label>password:</label>
+                        <label>: كلمة السر</label>
                         <input type="password" class="form-control" name="password" required="1">
 
 
@@ -413,7 +360,7 @@
                      <div class="form-group">
 
 
-                        <label>Email:</label>
+                        <label>: ايميل</label>
                         <input type="text" class="form-control" name="email" required="1">
 
 
@@ -421,15 +368,15 @@
                      <div class="form-group">
 
 
-                        <label>phone:</label>
+                        <label>: موبايل </label>
                         <input type="text" class="form-control" name="phone" required="1">
 
 
                      </div>
-                     <div class="form-group">
+                     <div class="form-group updateButoon">
 
 
-                        <button class="btn btn-primary" type="submit">Insert Data</button>
+                        <button class="btn btn-primary updateButoon" type="submit">إضافة  </button>
 
 
                      </div>
@@ -444,7 +391,7 @@
                <div class="modal-footer">
 
 
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-default" data-dismiss="modal">إغلاق </button>
 
 
                </div>
@@ -460,7 +407,8 @@
 
 
 
-        
+
+
 
       <h2 class="mytitle"> 
          complaints
@@ -475,47 +423,110 @@
          <tr>
           
 
-            <td> </td>
-            <td>  الشكوى</td>
-            
-            <td>      الايميل</td>
-            
-            
-            </tr>
-            
-            
-            
-            
-            
-            {% for row in messages_1 %}
-            
-            
-            <tr>
-            <td>
-            
-               <a href="/delete/{{row.0}}" class="btn btn-danger btn-xs myfonts"
-               onclick="return confirm('Are You Sure For Delete?')">الحذف</a>
-               
-              
-            
-            </td>
-            <td>{{row.1}}</td>
-            
-            <td>{{row.2}}</td>
-            <td></td>
-            
-            </tr>
-            
-            
-            
-            
-               
-            
-            
-            {% endfor %}
-            
-            
-            
-            
-            </table>
 
+            <td> </td>
+
+            <td>     أسباب الشكوى</td>
+            <td> عنوان الشكوى</td>
+
+
+         </tr>
+
+         
+         
+
+         {% for row in Messages %}
+
+        
+
+         <tr>
+            <td>
+
+               <a href="/delete/{{ row.0 }}" class="btn btn-danger btn-xs myfonts"
+               onclick="return confirm('هل متأكد من الحذف ؟')">الحذف</a>
+               
+               
+               
+
+            </td>
+
+            <td>{{row.2}}</td>
+            <td>{{row.1}}</td>
+
+            <td></td>
+
+         </tr>
+
+        
+
+
+               
+
+
+         {% endfor %}
+
+
+
+
+      </table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     
+      
+   
+      
+
+
+
+     
+      
+
+
+
+
+
+
+
+      
+
+
+      
+
+   </div>
+
+
+</div>
+
+
+
+
+
+
+{% endblock %}
+
+
+<script type="text/javascript" src="{{url_for('static', filename='js/jquery-3.2.1.min.js') }}"></script>
+
+<script type="text/javascript" src="{{url_for('static', filename = 'js/bootstrap.min.js')}}"></script>

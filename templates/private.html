@@ -5,6 +5,7 @@
   {% block body %}
 
   <h2 class="mytitle">البريد الالكتروني</h2>
+  <h2 class=myheader> welcome : {{session['username']}}</h2>
 
    {{data}}
    {% with messages =
@@ -69,8 +70,16 @@
   <table class="table table-hover myemail">
     <tr>
       <td></td>
+      <td></td>
+
+      <td>المستقبل</td>
+
+
       <td>الرسالة</td>
-      <td>المرسل</td>
+      <td>المرسل </td>
+
+
+
     </tr>
 
     {% for row in mysend %}
@@ -84,15 +93,17 @@
           >الحذف</a
         >
       </td>
+      <td>{{row.3}} </td>
 
       <td>{{row.2}}</td>
 
+
       <td>{{row.1}}</td>
+      <td>{{row.0}}</td>
 
-      <td></td>
     </tr>
-
     {% endfor %}
+
   </table>
 
   <br />

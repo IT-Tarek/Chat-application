@@ -4,20 +4,60 @@
 
 <body>
 {% block body %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+    
+{% if messages %}
 
+{% for category, message in messages %}
+{% if  category=='success' %}
+
+
+
+      <div class="alert alert-success   alert-dismissable " role="alert">
+
+  
+         {{message}}
+    
+      <button type="button" class="close" data-dismiss="alert" aria-label="close">
+  
+        <span aria-hidden="true">&times;</span>
+  
+      </button>
+  
+      </div>
+     {%else%}
+
+
+
+     <div class="alert alert-danger  alert-dismissable " role="alert">
+
+     
+      {{message}}
+    
+      <button type="button" class="close" data-dismiss="alert" aria-label="close">
+  
+        <span aria-hidden="true">&times;</span>
+  
+     </button>
+  
+    </div>
+    {% endif %}
+
+   {% endfor %}
+   {% endif %}
+   {% endwith %}
 
 
     <form class="Regi" action="{{url_for('insert_message')}}" method="POST">
-    
+
          
       <div class="col">
-        <input type="text"  name="Complaint" class="name" placeholder="  أدخل أسم المستخدم   " required="required" >
+        <input type="text"  name="Complaint" class="name"  value="{{session['username']}}" readonly required="required" >
       </div>
 
           <div class="col">
             <textarea   name="textarea" placeholder=" ✍ " cols="46" rows="6" class="mytexta" required="required"   ></textarea>
           </div>
-         
           
 <br>
           

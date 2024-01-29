@@ -18,6 +18,9 @@ body {
   width: 120px;
   margin-top: 10px;
 }
+
+
+
 /*complaints*/
 table {
   background-color: rgb(241 237 236);
@@ -27,6 +30,7 @@ table {
   width: 90px !important;
   height: 47px !important;
   padding: 11px !important;
+  margin-top:0px !important;
 }
 .mytable {
   background-color: rgb(198 225 230 / 62%);
@@ -46,6 +50,14 @@ table {
   position: relative;
   top: 11px;
 }
+
+
+
+
+
+
+
+
 /* login*/
 .form-signin {
   background: url("../images/yu.jpg");
@@ -82,10 +94,19 @@ table {
   direction: rtl;
   height: 40px;
 }
+
+
 .navbar-inverse .navbar-nav > li > a {
-  font-size: 19px;
-  color: white;
-}
+  color: #fff !important;
+  text-align: center;
+    font-size: 21px;
+    margin-right:12px ;
+  }
+  
+
+
+
+
 .form-signin .form-control {
   position: relative;
   top: 18px;
@@ -324,4 +345,37 @@ td {
   font-size: 22px;
   background-color: rgb(86, 169, 218);
   margin-top: 590px;
+}
+.mybutton_login{
+  float: right;
+  
+}
+.form-group > label {
+
+  float: right;
+  font-size: 16px;
+
+
+}
+.cordTitle{
+  text-align: center;
+  margin: auto;
+  font-size: 20px;
+}
+.btn-default{
+  font-size: 18px;
+}
+.updateButoon{
+  float:rigth;
+  text-align: end;
+  font-family: Cursive;
+}
+.mychat{
+  text-align: left;
+  
+}
+.home{
+
+ text-align: right; 
+ float: right;
 }

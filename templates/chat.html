@@ -18,10 +18,10 @@
         <br>
 
         <br>
-        <h2 class=myheader> welcome : {{session['username']}}</h2>
+        <h2 class=myheader> welcome: {{session['username']}}  </h2>
 
-
-        <h2 class=myheader>Room:{{session['room']}}</h2>
+      
+        <h2 class=myheader> room: {{session['room']}}     </h2>
         
         <br>
         <div class="form-group  mychat">
@@ -31,8 +31,10 @@
 </div>
 
 
-<div>           <button type="button" class="btn btn-danger my_button" onclick=leave_room()> إنهاء المحادثة </button>
-              <button type="button" id="send" class="btn btn-primary   my_button"> إرسال</button>
+
+<div>    
+                <button type="button" class="btn btn-danger  my_button" onclick=leave_room()> إنهاء المحادثة </button>
+                <button type="button" class="btn btn-primary my_button " id="send"  > إرسال</button>
             
 
 

@@ -2510,12 +2510,12 @@ legend {
 
 }
 label {
-
+  
+  float: right;
   display: inline-block;
   max-width: 100%;
   margin-bottom: 5px;
   font-weight: bold;
-
 }
 input[type="search"] {
   -webkit-box-sizing: border-box;
@@ -3127,7 +3127,6 @@ fieldset[disabled] .btn-default.focus {
   color: #fff;
   background-color: #337ab7;
   border-color: #2e6da4;
-  margin-top: 12px;
   font-size: 18px;
   float: right;
 }
@@ -4617,7 +4616,7 @@ fieldset[disabled] .navbar-default .btn-link:focus {
   color: #9d9d9d;
 }
 .navbar-inverse .navbar-nav > li > a {
-  color: #9d9d9d;
+  color: #fff;
 }
 .navbar-inverse .navbar-nav > li > a:hover,
 .navbar-inverse .navbar-nav > li > a:focus {

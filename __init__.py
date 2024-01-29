@@ -1,7 +1,8 @@
-from tkinter import *
-from tkinter import messagebox
+#library
+
+
+
 import re
-from flask_session import Session
 from flask_login import logout_user
 
 from flask import Flask, render_template, request, redirect, url_for, flash, session
@@ -10,9 +11,16 @@ from flask_socketio import SocketIO, join_room, leave_room, emit
 
 from flask.globals import session
 from werkzeug.security import generate_password_hash, check_password_hash
-#from sklearn import svm
-#from sklearn.naive_bayes import GaussianNB
+
 from flask_mysqldb import MySQL
+
+
+
+
+#Contact Database
+
+
+
 app = Flask(__name__)
 app.config['SESSION_TYPE'] = 'filesystem'
 Session(app)
@@ -29,8 +37,15 @@ app.config['MYSQL_DB'] ='cham'
 mysql = MySQL(app)
 
 
+
+
+
+#login ---
+
+
 @app.route('/', methods=['POST', 'GET'])
 def login():
+
     if request.method =='POST':
 
         username = request.form['username']
@@ -39,6 +54,7 @@ def login():
         cur = mysql.connection.cursor()
         results = cur.execute(
             "SELECT *  FROM registration WHERE username=%s", [username])
+        
 
         if results > 0:
 
@@ -56,23 +72,26 @@ def login():
 
                 if session['username'] == "leader_leaders" and session['groupid'] == '1000' and session['id'] == 17:
 
+                   
+
                     cur1 = mysql.connection.cursor()
                     cur1.execute(
                         "SELECT  * FROM registration where groupid !=1000")
                     data = cur1.fetchall()
-
                     cur1.close()
+
                     cur2 = mysql.connection.cursor()
 
                     cur2.execute("SELECT  * FROM messages_1")
                     data2 = cur2.fetchall()
                     cur2.close()
+                    
 
 
-                    return render_template('admin_sham.html', messages_1=data2, students=data)
+                    return render_template('admin_sham.html', Messages=data2, students=data)
 
                 else:
-                    return render_template('friends.html')
+                    return render_template('home.html')
 
             else:
                 return render_template('login.html')
@@ -86,70 +105,56 @@ def login():
 
 
 
+
+
+#sign
+
 @app.route('/sign', methods=['POST', 'GET'])
 def sign():
+    
+    if   "username" in session:
+           return redirect(url_for('home'))
 
-    return render_template('sign.html')
+    else:
+        return render_template('sign.html')
 
+
+
+
+
+#content
 
 @app.route('/content', methods=['POST', 'GET'])
 def content():
-    return render_template('content.html')
-
-    # if request.method == "POST":
-
-   # else:
-  #  return redirect(url_for('login'))
-
-
-@app.route('/admin_sham', methods=['POST', 'GET'])
-def Admin():
-    if session['username'] == "leader_leaders" and session['groupid'] == '1000'  and session['id'] == 17:
-
-
-
-
-        cur = mysql.connection.cursor()
-        cur.execute("SELECT  * FROM registration where groupid !=1000")
-        data = cur.fetchall()
-        cur.close()
-
-
-        cur2 = mysql.connection.cursor()
-
-        cur2.execute("SELECT  * FROM messages_1")
-
-        data2 = cur2.fetchall()
-        cur2.close()
-        
+   if  ("username" in session) and( session['username']!='leader_leaders'): 
       
+      return render_template('content.html')
+   else:
+      return redirect(url_for('home'))
 
-        return render_template('admin_sham.html',  message_1=data2, students=data)
-    else:
-        return redirect(url_for('login'))
 
-@app.route('/friends', methods=['POST', 'GET'])
-def friends():
-    if "username" in session:
 
-        return render_template('friends.html', user=session['username'])
+   
 
-    else:
-        return redirect(url_for('login'))
 
+
+#insert_user --
 
 @app.route('/insert_user', methods=['POST', 'GET'])
 def insert_user():
 
     if request.method == "POST":
+
         name = request.form['name']
-        xname = "^\w*$"
-        r4 = re.match(xname, name)
+        xname = "\w*$"
+        xuserame = "^[A-Za-z][A-Za-z0-9_]{7,29}$"
+        ConditionalName = re.match(xname, name)
+
         lastname = request.form['lastname']
-        r5 = re.match(xname, lastname)
+        ConditionalLastName = re.match(xname, lastname)
 
         username = request.form['username']
-        r6 = re.match(xname, username)
+        ConditionalUserName = re.match(xuserame, username)
 
         password = request.form['password']
         hashed_password = generate_password_hash(password)
@@ -157,11 +162,12 @@ def insert_user():
 
         email = request.form['email']
         xemail = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
-        re3 = re.match(xemail, email)
+        ConditionalEmail = re.match(xemail, email)
 
         phone = request.form['phone']
         x1 = "^\d\d\d\d\d\d\d\d\d\d$"
-        re1 = re.match(x1, phone)
+        ConditionalPhone = re.match(x1, phone)
+        
         formErrors = []
 
         cur = mysql.connection.cursor()
@@ -171,25 +177,25 @@ def insert_user():
 
         if results > 0:
 
-            formErrors = [" لا يمكن تكرار الحساب ", "error"]
-        if r4 == None:
-            formErrors = [" الاسم غير مقبول ", "error"]
-        elif r5 == None:
-            formErrors = [" الاسم غير مقبول ", "error"]
-        elif re3 == None:
-            formErrors = [" الايميل غير صحيح ", "error"]
+            formErrors = [" لا يمكن تكرار الحساب "]
+        if ConditionalName == None:
+            formErrors = [" الاسم غير مقبول "]
+        elif ConditionalLastName == None:
+            formErrors = [" الاسم غير مقبول "]
+        elif ConditionalEmail == None:
+            formErrors = [" الايميل غير صحيح "]
         elif repassword == None:
-            formErrors = ["  كلمة السر غير مقبولة  ", "error"]
+            formErrors = ["  كلمة السر غير مقبولة  "]
 
-        elif ((len(username) < 10) or (r6 == None)):
+        elif ((len(username) < 10) or (ConditionalUserName == None)):
 
-            formErrors = ["اسم المستخدم غير مقبول", "error"]
+            formErrors = ["اسم المستخدم غير مقبول"]
 
         elif len(password) < 10:
-            formErrors = ["كلمة السر قصيرة ", "error"]
+            formErrors = ["كلمة السر قصيرة "]
 
-        elif re1 == None:
-            formErrors = ["رقم الموبايل غير صحيح" ,"error"]
+        elif ConditionalPhone == None:
+            formErrors = ["رقم الموبايل غير صحيح" ]
 
         for x in formErrors:
 
@@ -211,54 +217,59 @@ def insert_user():
         return redirect(url_for('login'))
 
 
+ # insert_message
+
+
+
 @app.route('/insert_message', methods=['POST', 'GET'])
 def insert_message():
 
     if request.method == "POST":
-
         textarea = request.form['textarea']
-        Complaint = request.form['Complaint']
+        sender = request.form['Complaint']
         xname = "^\w+( \w+)*$"
         rtextarea = re.match(xname, textarea)
 
-        cur7 = mysql.connection.cursor()
 
-        resu = cur7.execute(
-            "SELECT *  FROM registration WHERE username=%s", [Complaint])
 
-        if resu > 0:
+        if ((rtextarea == None) or (rtextarea=="")):
 
-            if (rtextarea == None):
+              return redirect(url_for('content'))
 
-                return redirect(url_for('content'))
 
-            else:
+
+        else:
+
+                flash("تمت العملية بنجاح", "success")
+
                 cur = mysql.connection.cursor()
 
                 cur.execute(
-                    "INSERT INTO messages_1(message,Complaint) VALUES(%s, %s)", (textarea, Complaint))
+                    "INSERT INTO messages_1(message,Complaint) VALUES(%s, %s)", (textarea, sender))
 
                 mysql.connection.commit()
-                #return redirect(url_for('login'))
-                return render_template('content.html'), {"Refresh": "2; url=http://127.0.0.1:2700/friends"}
 
-        else:
-            return redirect(url_for('content'))
+                return render_template('content.html'),{"Refresh": "2; url=http://127.0.0.1:2700/home"}
+
     else:
-        return redirect(url_for('login'))
+      
+       return redirect(url_for('login'))
+    
 
+#Admin adds user
+ 
 
 @app.route('/insert', methods=['POST', 'GET'])
 def insert():
     if request.method == "POST":
         name = request.form['name']
         xname = "^\w*$"
-        r4 = re.match(xname, name)
+        ConditionalName = re.match(xname, name)
         lastname = request.form['lastname']
-        r5 = re.match(xname, lastname)
+        ConditionalLastName = re.match(xname, lastname)
 
         username = request.form['username']
-        r6 = re.match(xname, username)
+        ConditionalUserName = re.match(xname, username)
 
         password = request.form['password']
         hashed_password = generate_password_hash(password)
@@ -266,11 +277,11 @@ def insert():
 
         email = request.form['email']
         xemail = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
-        re3 = re.match(xemail, email)
+        ConditionalEmail = re.match(xemail, email)
 
         phone = request.form['phone']
         x1 = "^\d\d\d\d\d\d\d\d\d\d$"
-        re1 = re.match(x1, phone)
+        ConditionalPhone = re.match(x1, phone)
         formErrors = []
 
         cur = mysql.connection.cursor()
@@ -279,37 +290,48 @@ def insert():
             "SELECT *  FROM registration WHERE username=%s", [username])
 
         if results > 0:
+            formErrors = [" لا يمكن تكرار الحساب "]
 
-            formErrors = [" لا يمكن تكرار الحساب ", "error"]
-        if r4 == None:
-            formErrors = [" الاسم غير مقبول ", "error"]
-        elif r5 == None:
-            formErrors = [" الاسم غير مقبول ", "error"]
-        elif re3 == None:
-            formErrors = [" الايميل غير صحيح ", "error"]
+        if ConditionalName == None:
+            formErrors = [" الاسم غير مقبول "]
+
+        elif ConditionalLastName == None:
+            formErrors = [" الاسم غير مقبول "]
+
+        elif ConditionalEmail == None:
+            formErrors = [" الايميل غير صحيح "]
+
         elif repassword == None:
-            formErrors = ["  كلمة السر غير مقبولة  ", "error"]
+            formErrors = ["  كلمة السر غير مقبولة  "]
 
-        elif ((len(username) < 10) or (r6 == None)):
 
-            formErrors = ["اسم المستخدم غير مقبول", "error"]
+        elif  len(username) < 10:
+           
+         formErrors = ["اسم المستخدم  قصير ", "error"]
+
+        elif ConditionalUserName == None:
+
+         formErrors = ["اسم المستخدم غير مقبول", "error"]
+
 
         elif len(password) < 10:
             formErrors = ["كلمة السر قصيرة ", "error"]
 
-        elif re1 == None:
+        elif ConditionalPhone == None:
             formErrors = ["رقم الموبايل غير صحيح"]
 
         for x in formErrors:
 
             flash(x)
+
             return redirect(url_for('Admin'))
 
         if not formErrors:
             cur = mysql.connection.cursor()
 
             cur.execute(
-                "INSERT INTO registration (name,last_name,username,password, email, phone) VALUES (%s, %s, %s,%s, %s, %s)", (name, lastname, username, hashed_password, email, phone))
+                "INSERT INTO registration (name,last_name,username,password, email, phone) VALUES  (%s, %s, %s,%s, %s, %s)", (name, lastname, username, hashed_password, email, phone))
+                      
             mysql.connection.commit()
             flash("تمت العملية بنجاح", "success")
 
@@ -317,17 +339,21 @@ def insert():
     else:
         return redirect(url_for('Admin'))
 
-# delete message#
-
+#Delete a complaint
 
 @app.route('/delete/<string:id>', methods=['POST', 'GET'])
 def delete(id):
-    if session['username'] =="leader_leaders"  and session['groupid'] == '1000' and session['id'] == 17:
 
-        flash("تم حذف المستخدم بنجاح")
+    if   "username" in session and session['username'] =="leader_leaders"  and session['groupid'] == '1000' and session['id'] == 17:
+
         cur = mysql.connection.cursor()
-        cur.execute("DELETE FROM messages_1  WHERE id=%s", (id,))
+        results= cur.execute("DELETE FROM messages_1  WHERE id=%s", (id,))
         mysql.connection.commit()
+        if results > 0:
+
+               flash("تم حذف الرسالة بنجاح " , "success")
+        else:
+             return redirect(url_for('Admin'))
 
 
 
@@ -335,49 +361,136 @@ def delete(id):
     else:
          return redirect(url_for('Admin'))
     
+    
+# admin_sham
 
+
+@app.route('/admin_sham', methods=['POST', 'GET'])
+def Admin():
+    if  "username" in session and  session['username'] == "leader_leaders"  and session['groupid'] == '1000' and   session['id'] == 17:
+          
+           
+    
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT  * FROM registration where groupid !=1000")
+        data = cur.fetchall()
+        cur.close()
+
+
+        cur2 = mysql.connection.cursor()
+
+        cur2.execute("SELECT  * FROM messages_1")
+
+        data2 = cur2.fetchall()
+        cur2.close()
+        
+
+ 
+        return render_template('admin_sham.html',  Messages=data2, students=data)
+    else:
+        return redirect(url_for('login'))
+ 
+
+
+   #home
+
+@app.route('/home', methods=['POST', 'GET'])
+def home():
+    if "username" in session:
+
+        return render_template('home.html', user=session['username'])
+
+    else:
+        return redirect(url_for('login'))
 
 
 
     
 
+
  
   
-# delete user#
+# delete user --
 
 
 @app.route('/delete1/<string:id>', methods=['POST', 'GET'])
 def delete1(id):
-    if session['username'] == "leader_leaders" and session['groupid'] == '1000' and session['id'] == 17:
+    if  "username" in session and  session['username'] == "leader_leaders"  and session['groupid'] == '1000' and   session['id'] == 17:
 
-        flash("تم حذف المستخدم بنجاح")
         cur = mysql.connection.cursor()
-        cur.execute("DELETE FROM registration  WHERE id=%s", (id,))
+        results= cur.execute("DELETE FROM registration  WHERE id=%s", (id,))
         mysql.connection.commit()
-        return redirect(url_for('Admin'))
+
+
+        if results > 0:
+
+               flash("تم حذف المستخدم بنجاح " , "success")
+        else:
+             return redirect(url_for('Admin'))
+
     else:
         return redirect(url_for('Admin'))
 
-#    return render_template('admin_sham.html'), {"Refresh": "7; url=https://google.com"}
 
 
-# delete_email
+# Deletion of email messages by the user
+
 
 
 @app.route('/delete_email/<string:id>', methods=['POST', 'GET'])
 def delete_email(id):
-    # if request.form['username'] != 'leader_leaders' and request.form['groupid'] == 0:
+    if "username" in session:
 
-    flash("تم حذف المستخدم بنجاح")
-    cur = mysql.connection.cursor()
-    cur.execute("DELETE FROM send  WHERE id=%s", (id,))
-    mysql.connection.commit()
+        id_session= session['id']
 
-    return redirect(url_for('private'))
-    # else:
-    #    return redirect(url_for('login'))
+        cur5 = mysql.connection.cursor()
+        cur5.execute(
+             "SELECT *  FROM send  WHERE id=%s",(id,))     
+        myemail = cur5.fetchall()
+        cur5.close()
+
+        if len(myemail)>0:
+
+          receiver_username=myemail[0][4]
+
+          cur10 = mysql.connection.cursor()
+          cur10.execute(
+        
+            "SELECT *  FROM registration WHERE username=%s", [receiver_username])
+          inf_receiver = cur10.fetchall()
+          id_receiver  =inf_receiver[0][0]
+          cur10.close()
 
 
+ 
+          if  id_receiver ==id_session:
+
+                    cur = mysql.connection.cursor()
+                    results= cur.execute("DELETE FROM send  WHERE id=%s", (id,))
+                    mysql.connection.commit()
+
+                    if results > 0:
+
+                          flash("تم حذف الرسالة بنجاح " , "success")
+                          return redirect(url_for('private'))
+
+                    else:
+                          return redirect(url_for('private'))
+          else:
+                
+                 return redirect(url_for('private'))
+
+
+        else:
+
+                return redirect(url_for('private'))
+
+
+    else:
+                return redirect(url_for('login'))
+
+
+#  update
 @app.route('/update', methods=['POST', 'GET'])
 def update():
 
@@ -393,12 +506,12 @@ def update():
         formErrors = []
 
         if len(username) < 10:
-            formErrors = ["اسم المستخدم قصيرة", "error"]
+            formErrors = ["اسم المستخدم قصيرة"]
         elif len(password) < 10:
-            formErrors = ["كلمة السر قصيرة ", "error"]
+            formErrors = ["كلمة السر قصيرة "]
 
         elif len(phone) != 10:
-            formErrors = ["رقم الموبايل غير صحيح", "error"]
+            formErrors = ["رقم الموبايل غير صحيح"]
 
         for x in formErrors:
 
@@ -417,34 +530,35 @@ def update():
             return redirect(url_for('Admin'))
 
         else:
-            return redirect(url_for('login'))
+            return redirect(url_for('Admin'))
     else:
         return redirect(url_for('login'))
 
-
+#law
 @app.route('/law', methods=['POST', 'GET'])
 def law():
 
     return render_template("law.html")
 
-
+#chat
 @app.route('/chat', methods=['GET', 'POST'])
 def chat():
     if(request.method == 'POST'):
-        # username = request.form['username']
-        username = session['username']
+      
 
         room = request.form['room']
         # In this step I will store  the data in session
-        session['username'] = username
+       
         session['room'] = room
-        return render_template('chat.html', session=session, user_username=username)
+        return render_template('chat.html', session=session)
+
     else:
         if(session.get('username') is not None):
-            return render_template('chat.html', session=session)
+            return render_template('home.html', session=session)
         else:
             return redirect(url_for('login'))
-
+        
+    #join
 
 @socketio.on('join', namespace='/chat')
 def join(message):
@@ -453,149 +567,112 @@ def join(message):
     emit('status', {'msg': session.get('username') +
          ' has entered the room'}, room=room)
 
-
+#text
 @socketio.on('text', namespace='/chat')
 def text(message):
     room = session.get('room')
-    emit('message', {'msg': session.get('username') +
+    emit('message', {'msg':session.get('username')+
          ' : ' + message['msg']}, room=room)
 
 
+#left
 @socketio.on('left', namespace='/chat')
 def left(message):
-    room = session.get('room')
+    myroom = session.get('room')
     username = session.get('username')
-    leave_room(room)
+    leave_room(myroom)
     session.clear()
-    emit('status', {'msg': username + ' has left the room.'}, room=room)
+    emit('status', {'msg': username +' has left the room.'}, room=myroom) 
 
+ #private   
 
 @app.route('/private', methods=['POST', 'GET'])
 def private():
     if "username" in session:
-        username = session['username']
-        cur0 = mysql.connection.cursor()
+         username = session['username']
 
-        cur0.execute(
-            "SELECT  id,sender,mymail FROM send WHERE receiver=%s", [username])
-        mydata = cur0.fetchall()
-        cur0.close()
-        return render_template('private.html', mysend=mydata)
+         cur0 = mysql.connection.cursor()
+         cur0.execute(
+            "SELECT id, sender,mymail,receiver  FROM send WHERE receiver=%s", [username])
+         mydata = cur0.fetchall()
+         cur0.close()
 
+         return render_template('private.html', mysend=mydata) 
     else:
 
         return redirect(url_for('login'))
 
-
+#logout
+    
 @app.route("/logout")
 def logout():
-    logout_user()
-    return render_template('login.html')
+    logout_user
+    session.clear()
+
+    return redirect(url_for('login'))
 
 
+   
+   
+#send
 @app.route('/send', methods=['POST', 'GET'])
 def send():
-    if session.get('username'):
+    if request.method == "POST": 
         sender = session['username']
-        mymail = request.form['mymail']
-
         receiver = request.form['receiver']
+        mymail = request.form['mymail']
         xname = "^\w+( \w+)*$"
+
         rtextarea = re.match(xname, mymail)
-        data = ["يا أحمق", "ياغبي ليش ما نجحت", "متخلف"]
 
         if (rtextarea == None):
-            return redirect(url_for('friends'))
+             return redirect(url_for('home'))
+        
+        elif (receiver != sender):
+            
+           
+            connect = mysql.connection.cursor()
 
-        elif (receiver == sender):
-            return redirect(url_for('friends'))
+               
+            connect.execute(
+               "SELECT *  FROM registration WHERE username=%s", [receiver])
+        
 
-        elif (mymail in data):
+            x = connect.fetchall()
 
-            data = [
-                "   يمكن أن  تحوي رسالتك على كلمات غير أخلاقية قد تعرضك للملاحقة القانونية   "]
-            for x in data:
-                flash(x)
-                return render_template('Secret.html')
+            if len(x) >0:
+           
+         
 
-                # if(x1 == 0):
-                # flash(" تم الغاء الارسال", "success")
+              user_id=x[0][0]
+              mysql.connection.commit() 
 
-            # myokk = request.form['ok']
 
-            # if(request.form['ok'] != None):
-            #myokk = request.form['ok']
+              cur1 = mysql.connection.cursor()
 
-            #myok = request.form['ok']
 
-            # if (myok == 'ok'):
-            # flash("تمت العملية بنجاح", "success")
 
-            # mysql.connection.commit()
+              cur1.execute(
+                   "INSERT INTO send(mymail,receiver,sender,user_id) VALUES(%s, %s,%s,%s)", (mymail, receiver, sender,user_id))
+              mysql.connection.commit()
+              flash(" تمت العملية بنجاح", "success")
+              return redirect(url_for('private'))       
 
-                # else:
-                #  flash("تمت العملية بنجاhhح", "success")
 
-                # cur = mysql.connection.cursor()
 
-                # cur.execute(
-                #    "INSERT INTO send(mymail,receiver,sender) VALUES(%s, %s,%s)", (mymail, receiver, sender))
-                # mysql.connection.commit()
+            else:
+                  return redirect(url_for('home'))
 
-                # return redirect(url_for('private'))
-
-                # return render_template('Secret.html',  email=mymail, receivers=receiver)
-
-            # return mymail, receiver, mymail
-            # return redirect(url_for('send2'))
-
+        
         else:
-
-            flash("تمت العملية بنجاح", "success")
-
-            cur = mysql.connection.cursor()
-
-            cur.execute(
-                "INSERT INTO send(mymail,receiver,sender) VALUES(%s, %s,%s)", (mymail, receiver, sender))
-            mysql.connection.commit()
-
-            return redirect(url_for('private'))
-        # return render_template('private.html'), {"Refresh": "3; url=http://127.0.0.1:2700/friends"}
-
+          return redirect(url_for('login'))
+ 
+          
     else:
         return redirect(url_for('login'))
 
 
-@app.route('/send2', methods=['POST', 'GET'])
-def send2():
-    if session.get('username'):
-        sender = session['username']
-        mymail = request.form['mymail']
 
-        receiver = request.form['receiver']
-        xname = "^\w+( \w+)*$"
-        rtextarea = re.match(xname, mymail)
-        if (rtextarea == None):
-            return redirect(url_for('friends'))
-
-        elif (receiver == sender):
-            return redirect(url_for('friends'))
-
-        else:
-
-            flash("تمت العملية بنجاح", "success")
-
-            cur = mysql.connection.cursor()
-
-            cur.execute(
-                "INSERT INTO send(mymail,receiver,sender) VALUES(%s, %s,%s)", (mymail, receiver, sender))
-            mysql.connection.commit()
-
-            return redirect(url_for('private'))
-        # return render_template('private.html'), {"Refresh": "3; url=http://127.0.0.1:2700/friends"}
-
-    else:
-        return redirect(url_for('login'))
 
 
 if __name__ == '__main__':
