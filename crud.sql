@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 09, 2018 at 05:51 AM
+-- Generation Time: july 30, 2013 at 07:32 PM
 -- Server version: 5.7.14
 -- PHP Version: 7.0.10
 
@@ -38,15 +38,8 @@ CREATE TABLE `students` (
 --
 
 INSERT INTO `students` (`id`, `name`, `email`, `phone`) VALUES
-(3, 'Parwiz', 'parwiz.f@gmail.com', '009378976767'),
-(4, 'John Doe', 'johndoe@gmail.com', '999999999'),
-(5, 'Karimja', 'ka@gmail.com', '7333392'),
-(6, 'Jamal', 'ja@gmail.com', '3434343'),
-(7, 'Nawid', 'na@gmail.com', '343434'),
-(8, 'Tom Logan', 'Tom@gmail.com', '7347374347'),
-(12, 'Tom Logan', 'tom@gmail.com', '11111111111'),
-(13, 'Fawad', 'fa@gmail.com', '347374837483'),
-(14, 'Wahid', 'wa@gmail.com', '4354354345');
+(3, 'ali', 'micogmail.com', '0988765111'),
+
 
 --
 -- Indexes for dumped tables
